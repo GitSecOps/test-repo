@@ -22,11 +22,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Setup sonar scanner
-      - uses: SonarSource/sonarqube-scan-action@v1.1.0
+        uses: SonarSource/sonarqube-scan-action@v1.1.0
       
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: 'Checkout repository on branch: ${{ github.REF }}'
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.HEAD_REF }}
   

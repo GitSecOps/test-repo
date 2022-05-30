@@ -1,0 +1,25 @@
+name: Sonarqube_Scanning
+
+on:
+  pull_request:
+      types: [opened, edited, reopened, synchronize]
+      branches: [ main ]
+jobs:
+  Sonarqube_Scan:
+    runs-on: ubuntu-runner-1111
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        # Disabling shallow clone is recommended for improving relevancy of reporting
+        fetch-depth: 0
+    - name: Run Sonarqube Analysis for PR
+      run: sonar-scanner
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.projectKey=<key of project>
+          -Dsonar.pullrequest.key=${{ github.event.number }}
+          -Dsonar.pullrequest.branch=${{ github.HEAD_REF }}
+          -Dsonar.pullrequest.base=${{ github.BASE_REF }}
+          -Dsonar.pullrequest.github.repository=${{ github.repository }}
+          -Dsonar.scm.provider=git
+          -Dsonar.java.binaries=/tmp
